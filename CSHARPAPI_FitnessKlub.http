@@ -1,6 +1,0 @@
-@CSHARPAPI_FitnessKlub_HostAddress = http://localhost:5137
-
-GET {{CSHARPAPI_FitnessKlub_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
