@@ -23,20 +23,20 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.PrivatniTreneri);
+            return Ok(_context.Privatni_Treneri);
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_context.PrivatniTreneri.Find(id));
+            return Ok(_context.Privatni_Treneri.Find(id));
         }
 
         [HttpPost]
         public IActionResult Post(PrivatniTrener privatnitrener)
         {
-            _context.PrivatniTreneri.Add(privatnitrener);
+            _context.Privatni_Treneri.Add(privatnitrener);
             _context.SaveChanges();
             return StatusCode(StatusCodes.Status201Created, privatnitrener);
         }
@@ -46,14 +46,14 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         [Produces("application/json")]
         public IActionResult Put(int id, PrivatniTrener privatnitrener)
         {
-            var privatnitrenerIzBaze = _context.PrivatniTreneri.Find(id);
+            var privatnitrenerIzBaze = _context.Privatni_Treneri.Find(id);
 
             privatnitrenerIzBaze.Ime = privatnitrener.Ime;
             privatnitrenerIzBaze.Prezime = privatnitrener.Prezime;
             privatnitrenerIzBaze.Email = privatnitrener.Email;
             privatnitrenerIzBaze.CijenaSat = privatnitrener.CijenaSat;
 
-            _context.PrivatniTreneri.Update(privatnitrenerIzBaze);
+            _context.Privatni_Treneri.Update(privatnitrenerIzBaze);
             _context.SaveChanges();
 
             return Ok(new { poruka = "Uspješno promjenjeno" });
@@ -65,8 +65,8 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         [Produces("application/json")]
         public IActionResult Delete(int id)
         {
-            var smjerIzBaze = _context.PrivatniTreneri.Find(id);
-            _context.PrivatniTreneri.Remove(smjerIzBaze);
+            var smjerIzBaze = _context.Privatni_Treneri.Find(id);
+            _context.Privatni_Treneri.Remove(smjerIzBaze);
             _context.SaveChanges();
             return Ok(new { poruka = "Uspješno obrisano" });
         }

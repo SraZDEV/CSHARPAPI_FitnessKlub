@@ -11,7 +11,7 @@ namespace CSHARPAPI_FitnessKlub.Data
 
         }
 
-        public DbSet<PrivatniTrener> PrivatniTreneri { get; set; }
+        public DbSet<PrivatniTrener> Privatni_Treneri { get; set; }
 
     }
 }
