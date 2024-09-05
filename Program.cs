@@ -20,6 +20,16 @@ builder.Services.AddDbContext<FitnessKlubContext>(
     }
     );
 
+builder.Services.AddCors(opcije =>
+{
+    opcije.AddPolicy("CorsPolicy",
+        builder =>
+            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+    );
+
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,5 +53,7 @@ app.UseStaticFiles();
 app.UseDefaultFiles();
 app.MapFallbackToFile("index.html");
 // završio za potrebe produkcije
+
+app.UseCors("CorsPolicy");
 
 app.Run();
