@@ -11,8 +11,8 @@ GO
 SELECT name, collation_name FROM sys.databases;
 GO
 
-drop table privatni_treneri;
 drop table clanovi;
+drop table privatni_treneri;
 drop table grupe;
 drop table privatni_trening;
 
