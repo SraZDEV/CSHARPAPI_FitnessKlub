@@ -65,8 +65,8 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         [Produces("application/json")]
         public IActionResult Delete(int id)
         {
-            var smjerIzBaze = _context.Privatni_Treneri.Find(id);
-            _context.Privatni_Treneri.Remove(smjerIzBaze);
+            var privatnitrenerIzBaze = _context.Privatni_Treneri.Find(id);
+            _context.Privatni_Treneri.Remove(privatnitrenerIzBaze);
             _context.SaveChanges();
             return Ok(new { poruka = "Uspješno obrisano" });
         }
