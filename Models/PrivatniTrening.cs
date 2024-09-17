@@ -6,8 +6,8 @@ namespace CSHARPAPI_FitnessKlub.Models
     {
 
         [Column("privatni_trener")]
-        public PrivatniTrener PrivatniTrener { get; set; }
-        public Clan Clan { get; set; }
+        public PrivatniTrener? PrivatniTrener { get; set; }
+        public Clan? Clan { get; set; }
 
     }
 }
