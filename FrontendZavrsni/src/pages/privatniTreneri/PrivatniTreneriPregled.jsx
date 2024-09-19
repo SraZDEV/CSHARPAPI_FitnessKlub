@@ -41,7 +41,7 @@ export default function PrivatniTreneriPregled(){
         obrisiAsync(id);
     }
 
-    return
+    return(
         <Container>
             <Link to={RoutesNames.PRIVATNI_TRENERI_NOVI}>Dodaj novog trenera</Link>
             <Table striped bordered hover responsive>
@@ -84,13 +84,21 @@ export default function PrivatniTreneriPregled(){
                                 fixedDecimalScale
                                 />}
                             </td>
-                            <Button>
-                                
+                            <Button
+                                variant="primary"
+                                onClick={()=>navigate(`/privatniTreneri/${privatniTreneri.id}`)}>
+                                    promjeni
+                            </Button>
+                            &nbsp;&nbsp;&nbsp;
+                            <Button
+                            variant="danger"
+                            onClick={()=>obrisi(privatniTreneri.id)}>
+                                Obriši
                             </Button>
                         </tr>
                     ))}
                 </tbody>
             </Table>
         </Container>
-
+    )
 }
