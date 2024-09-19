@@ -11,5 +11,7 @@ namespace CSHARPAPI_FitnessKlub.Models
         [Column("cijena_sat")]
         public decimal? CijenaSat { get; set; }
 
+
+        public ICollection<PrivatniTrener>? PrivatniTreneri { get; set; }
     }
 }
