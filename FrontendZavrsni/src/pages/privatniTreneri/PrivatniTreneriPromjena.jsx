@@ -10,7 +10,7 @@ export default function PrivatniTreneriPromjena(){
 
     const navigate = useNavigate();
     const routeParams = useParams();
-    const [privatniTrener] = useState({});
+    const [privatniTrener, setPrivatniTrener] = useState({});
 
     async function dohvatiPrivatniTreneri(){
         const odgovor = await PrivatniTrenerService.getById(routeParams.id);
@@ -18,11 +18,12 @@ export default function PrivatniTreneriPromjena(){
             alert(odgovor.poruka);
             return
         }
+        setPrivatniTrener(odgovor.poruka);
     }
 
     useEffect(()=>{
         dohvatiPrivatniTreneri();
-    });
+    },[]);
 
     async function promjena(privatniTrener){
         //console.log(privatniTrener)
@@ -43,31 +44,37 @@ export default function PrivatniTreneriPromjena(){
             ime: podatci.get('ime'),
             prezime: podatci.get('prezime'),
             email: podatci.get('email'),
-            cijena: parseFloat(podatci.get('cijena'))
+            cijenaSat: parseFloat(podatci.get('cijenaSat'))
         });
     }
 
     return(
         <Container>
             Promjena privatnih trenera
+            <hr />
             <Form onSubmit={obradiSubmit}>
                 <Form.Group controlId="ime">
                     <Form.Label>Ime</Form.Label>
-                    <Form.Control type="text" name="ime" required />
+                    <Form.Control type="text" name="ime" required 
+                    defaultValue={privatniTrener.ime}/>
                 </Form.Group>
                 <Form.Group controlId="prezime">
-                    <Form.Label>Ime</Form.Label>
-                    <Form.Control type="text" name="prezime" required />
+                    <Form.Label>Prezime</Form.Label>
+                    <Form.Control type="text" name="prezime" required 
+                    defaultValue={privatniTrener.prezime}/>
                 </Form.Group>
                 <Form.Group controlId="email">
-                    <Form.Label>Ime</Form.Label>
-                    <Form.Control type="text" name="email" required />
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="text" name="email" required 
+                    defaultValue={privatniTrener.email}/>
                 </Form.Group>
-                <Form.Group controlId="cijena">
-                    <Form.Label>Ime</Form.Label>
-                    <Form.Control type="number" name="cijena" step={0.01} />
+                <Form.Group controlId="cijenaSat">
+                    <Form.Label>Cijena</Form.Label>
+                    <Form.Control type="number" name="cijenaSat" step={0.01} 
+                    defaultValue={privatniTrener.cijenaSat}/>
                 </Form.Group>
-            </Form>
+            
+
             <hr />
             <Row>
                 <Col xs={6} sm={6} md={3} lg={6} xl={6} xxl={6}>
@@ -80,8 +87,10 @@ export default function PrivatniTreneriPromjena(){
                 <Button variant="primary" type="submit" className="siroko">
                     Promjeni privatnog trenera
                 </Button>
+                
                 </Col>
             </Row>
+            </Form>
         </Container>
     )
 }

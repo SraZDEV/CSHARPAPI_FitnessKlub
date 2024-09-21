@@ -14,14 +14,13 @@ function App() {
 
     return (
       <>
-        <NavBarFitnessKlub>
+        <NavBarFitnessKlub /> 
         <Routes>
             <Route path={RoutesNames.HOME} element={<Pocetna />} />
             <Route path={RoutesNames.PRIVATNI_TRENERI_PREGLED} element={<PrivatniTreneriPregled />} />
             <Route path={RoutesNames.PRIVATNI_TRENERI_NOVI} element={<PrivatniTreneriDodaj />} />
             <Route path={RoutesNames.PRIVATNI_TRENERI_PROMJENA} element={<PrivatniTreneriPromjena />} />
         </Routes>
-        </NavBarFitnessKlub>
       </>
     )
     

@@ -27,13 +27,14 @@ export default function PrivatniTreneriDodaj(){
             ime: podatci.get('ime'),
             prezime: podatci.get('prezime'),
             email: podatci.get('email'),
-            cijena: parseFloat(podatci.get('cijena'))
+            cijenaSat: parseFloat(podatci.get('cijenaSat'))
         })
     }
 
     return(
         <Container>
             Dodavanje novog trenera
+            <hr />
             <Form onSubmit={obradiSubmit}>
                 <Form.Group controlId="ime">
                     <Form.Label>Ime</Form.Label>
@@ -44,12 +45,12 @@ export default function PrivatniTreneriDodaj(){
                     <Form.Control type="text" name="prezime" required />
                 </Form.Group>
                 <Form.Group controlId="email">
-                    <Form.Label>Ime</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control type="text" name="email" required />
                 </Form.Group>
-                <Form.Group controlId="cijena">
+                <Form.Group controlId="cijenaSat">
                     <Form.Label>Cijena</Form.Label>
-                    <Form.Control type="number" name="cijena" step={0.01}/>
+                    <Form.Control type="number" name="cijenaSat" step={0.01}/>
                 </Form.Group>
                 
                 <hr />
@@ -62,6 +63,7 @@ export default function PrivatniTreneriDodaj(){
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                     <Button variant="primary" type="submit" className="siroko">
+                    Dodaj novog trenera
                     </Button>
                     </Col>
                 </Row>

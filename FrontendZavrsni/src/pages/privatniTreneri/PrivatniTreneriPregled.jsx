@@ -24,7 +24,7 @@ export default function PrivatniTreneriPregled(){
     }
 
     useEffect(()=>{
-        dohvatiPrivatniTreneri;
+        dohvatiPrivatniTreneri();
     },[]);
 
     async function obrisiAsync(id) {
@@ -51,31 +51,23 @@ export default function PrivatniTreneriPregled(){
                         <th>Prezime</th>
                         <th>Email</th>
                         <th>Cijena po satu</th>
+                        <th>Akcija</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {privatniTreneri && privatniTreneri.map((privatniTreneri,index)=>(
+                    {privatniTreneri && privatniTreneri.map((privatniTrener,index)=>(
                         <tr key={index}>
-                            <td>{privatniTreneri.ime}</td>
-                            <td className={privatniTreneri.ime==null ? 'sredina' : 'desno'}>
-                                {privatniTreneri.ime==null ? 'Nije definirano' : privatniTreneri.ime}
-
-                            </td>
-                            <td>{privatniTreneri.prezime}</td>
-                            <td className={privatniTreneri.prezime==null ? 'sredina' : 'desno'}>
-                                {privatniTreneri.prezime==null ? 'Nije definirano' : privatniTreneri.prezime}
-
-                            </td>
-                            <td>{privatniTreneri.email}</td>
-                            <td className={privatniTreneri.email==null ? 'sredina' : 'desno'}>
-                                {privatniTreneri.email==null ? 'Nije definirano' : privatniTreneri.email}
-
-                            </td>
-                            <td className={privatniTreneri.cijena==null ? 'sredina' : 'desno'}>
-                                {privatniTreneri.cijena==null 
+                            <td>{privatniTrener.ime}</td>
+                            
+                            <td>{privatniTrener.prezime}</td>
+                            
+                            <td>{privatniTrener.email}</td>
+                            
+                            <td className={privatniTrener.cijenaSat==null ? 'sredina' : 'desno'}>
+                                {privatniTrener.cijenaSat==null 
                                 ? 'Nije definirano' : 
                                 <NumericFormat
-                                value={privatniTreneri.cijena}
+                                value={privatniTrener.cijenaSat}
                                 displayType={'text'}
                                 thousandSeparator='.'
                                 decimalSeparator=','
@@ -84,17 +76,19 @@ export default function PrivatniTreneriPregled(){
                                 fixedDecimalScale
                                 />}
                             </td>
+                            <td>
                             <Button
                                 variant="primary"
-                                onClick={()=>navigate(`/privatniTreneri/${privatniTreneri.id}`)}>
+                                onClick={()=>navigate(`/privatniTreneri/${privatniTrener.id}`)}>
                                     promjeni
                             </Button>
                             &nbsp;&nbsp;&nbsp;
                             <Button
                             variant="danger"
-                            onClick={()=>obrisi(privatniTreneri.id)}>
+                            onClick={()=>obrisi(privatniTrener.id)}>
                                 Obriši
                             </Button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

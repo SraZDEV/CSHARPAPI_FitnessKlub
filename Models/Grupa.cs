@@ -12,6 +12,6 @@ public class Grupa: Entitet
     public int? KolicinaClanova { get; set; }
     public int? Cijena { get; set; }
 
-    public ICollection<Grupa>? Grupe { get; set; }
+    
 
 }

@@ -9,7 +9,7 @@ namespace CSHARPAPI_FitnessKlub.Models
         public PrivatniTrener? PrivatniTrener { get; set; }
         public Clan? Clan { get; set; }
 
-        public ICollection<PrivatniTrening>? PrivatniTreninzi { get; set; }
+        
 
     }
 }
