@@ -80,7 +80,7 @@ export default function PrivatniTreneriPregled(){
                             <Button
                                 variant="primary"
                                 onClick={()=>navigate(`/privatniTreneri/${privatniTrener.id}`)}>
-                                    promjeni
+                                Promjeni
                             </Button>
                             &nbsp;&nbsp;&nbsp;
                             <Button
