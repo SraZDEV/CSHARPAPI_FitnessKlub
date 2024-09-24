@@ -1,4 +1,5 @@
 using CSHARPAPI_FitnessKlub.Data;
+using CSHARPAPI_FitnessKlub.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,7 @@ builder.Services.AddCors(opcije =>
 
 });
 
+builder.Services.AddAutoMapper(typeof(FitnessKlubMappingProfile));
 
 var app = builder.Build();
 

@@ -1,6 +1,9 @@
-﻿using CSHARPAPI_FitnessKlub.Data;
+﻿using AutoMapper;
+using CSHARPAPI_FitnessKlub.Data;
 using CSHARPAPI_FitnessKlub.Models;
+using CSHARPAPI_FitnessKlub.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace CSHARPAPI_FitnessKlub.Controllers
 {
@@ -8,56 +11,110 @@ namespace CSHARPAPI_FitnessKlub.Controllers
     [ApiController]
     [Route("api/v1/[controller]")]
 
-    
-    public class PrivatniTrenerController:ControllerBase
+
+    public class PrivatniTrenerController(FitnessKlubContext context, IMapper mapper) : FitnessKlubController(context, mapper)
     {
 
-        private readonly FitnessKlubContext _context;
-
-
-        public PrivatniTrenerController(FitnessKlubContext context)
-        {
-            _context = context;
-        }
-
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<List<PrivatniTrenerDTORead>> Get()
         {
-            return Ok(_context.Privatni_Treneri);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { poruka = ModelState });
+            }
+            try
+            {
+                return Ok(_mapper.Map<List<PrivatniTrenerDTORead>>(_context.Privatni_Treneri));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
         }
+
 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult GetById(int id)
+        public ActionResult<PrivatniTrenerDTORead> GetById(int id)
         {
-            return Ok(_context.Privatni_Treneri.Find(id));
+            if (!ModelState.IsValid) 
+            { 
+                return BadRequest(new { poruka = ModelState }); 
+            }
+            PrivatniTrener? e;
+            try
+            {
+                e = _context.Privatni_Treneri.Find(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
+            if (e == null)
+            {
+                return NotFound(new { poruka = "Privatni trener ne postoji u bazi" });
+            }
+
+            return Ok(_mapper.Map<PrivatniTrenerDTORead>(e));
         }
 
         [HttpPost]
-        public IActionResult Post(PrivatniTrener privatnitrener)
+        public IActionResult Post(PrivatniTrenerDTOInsertUpdate dto)
         {
-            _context.Privatni_Treneri.Add(privatnitrener);
-            _context.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created, privatnitrener);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { poruka = ModelState});
+            }
+            try
+            {
+                var e = _mapper.Map<PrivatniTrener>(dto);
+                _context.Privatni_Treneri.Add(e);
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created, _mapper.Map<PrivatniTrenerDTORead>(e));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
         }
 
         [HttpPut]
         [Route("{id:int}")]
         [Produces("application/json")]
-        public IActionResult Put(int id, PrivatniTrener privatnitrener)
+        public IActionResult Put(int id, PrivatniTrenerDTOInsertUpdate dto)
         {
-            var privatnitrenerIzBaze = _context.Privatni_Treneri.Find(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { poruka = ModelState});
+            }
+            try
+            {
+                PrivatniTrener? e;
+                try
+                {
+                    e = _context.Privatni_Treneri.Find(id);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { poruka = ex.Message });
+                }
+                if (e == null)
+                {
+                    return NotFound(new { poruka = "Smjer ne postoji u bazi" });
+                }
 
-            privatnitrenerIzBaze.Ime = privatnitrener.Ime;
-            privatnitrenerIzBaze.Prezime = privatnitrener.Prezime;
-            privatnitrenerIzBaze.Email = privatnitrener.Email;
-            privatnitrenerIzBaze.CijenaSat = privatnitrener.CijenaSat;
+                e = _mapper.Map(dto, e);
 
-            _context.Privatni_Treneri.Update(privatnitrenerIzBaze);
-            _context.SaveChanges();
+                _context.Privatni_Treneri.Update(e);
+                _context.SaveChanges();
 
-            return Ok(new { poruka = "Uspješno promjenjeno" });
-
+                return Ok(new { poruka = "Uspješno promjenjeno" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
+                
         }
 
         [HttpDelete]
@@ -65,11 +122,33 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         [Produces("application/json")]
         public IActionResult Delete(int id)
         {
-            var privatnitrenerIzBaze = _context.Privatni_Treneri.Find(id);
-            _context.Privatni_Treneri.Remove(privatnitrenerIzBaze);
-            _context.SaveChanges();
-            return Ok(new { poruka = "Uspješno obrisano" });
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { poruka = ModelState });
+            }
+            try
+            {
+                PrivatniTrener? e;
+                try
+                {
+                    e = _context.Privatni_Treneri.Find(id);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { poruka = ex.Message });
+                }
+                if (e == null)
+                {
+                    return NotFound("Privatni trener ne postoji u bazi!");
+                }
+                _context.Privatni_Treneri.Remove(e);
+                _context.SaveChanges();
+                return Ok(new { poruka = "Uspješno obrisano" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
         }
-
     }
 }
