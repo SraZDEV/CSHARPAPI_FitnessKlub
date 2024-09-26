@@ -21,14 +21,14 @@ export default function GrupePromjena() {
   }
 
   async function dohvatiGrupa() {
-    const odgovor = await Service.getById(routeParams.sifra);
+    const odgovor = await Service.getById(routeParams.id);
     if(odgovor.greska){
       alert(odgovor.poruka);
       return;
   }
     let grupa = odgovor.poruka;
     setGrupa(grupa);
-    setPrivatniTrenerId(grupa.smjerSifra); 
+    setPrivatniTrenerId(grupa.privatniTreneri); 
   }
 
   async function dohvatiInicijalnePodatke() {
@@ -42,7 +42,7 @@ export default function GrupePromjena() {
   },[]);
 
   async function promjena(e) {
-    const odgovor = await Service.promjena(routeParams.sifra, e);
+    const odgovor = await Service.promjena(routeParams.id, e);
     if(odgovor.greska){
         alert(odgovor.poruka);
         return;
@@ -81,8 +81,8 @@ export default function GrupePromjena() {
             onChange={(e)=>{setPrivatniTrenerId(e.target.value)}}
             >
             {privatniTreneri && privatniTreneri.map((s,index)=>(
-              <option key={index} value={s.sifra}>
-                {s.naziv}
+              <option key={index} value={s.id}>
+                {s.ime}
               </option>
             ))}
             </Form.Select>

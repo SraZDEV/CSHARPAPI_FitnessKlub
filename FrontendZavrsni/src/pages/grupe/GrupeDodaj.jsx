@@ -64,21 +64,20 @@ export default function GrupeDodaj() {
             >
             {privatniTreneri && privatniTreneri.map((s,index)=>(
               <option key={index} value={s.id}>
-                {s.naziv}
+                {s.ime}
               </option>
             ))}
             </Form.Select>
           </Form.Group>
 
-          <Form.Group controlId="predavac">
-              <Form.Label>Predavač</Form.Label>
-              <Form.Control type="text" name="predavac" required />
-          </Form.Group>
-
-
           <Form.Group controlId="kolicinaClanova">
               <Form.Label>Količina članova</Form.Label>
               <Form.Control type="number" name="kolicinaClanova" min={5} max={30} />
+          </Form.Group>
+
+          <Form.Group controlId="cijenaSat">
+              <Form.Label>Cijena</Form.Label>
+              <Form.Control type="text" name="cijenaSat" required />
           </Form.Group>
 
 
