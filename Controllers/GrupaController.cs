@@ -99,7 +99,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         }
 
         [HttpPut]
-        [Route("{sifra:int}")]
+        [Route("{id:int}")]
         [Produces("application/json")]
         public IActionResult Put(int id, GrupaDTOInsertUpdate dto)
         {
