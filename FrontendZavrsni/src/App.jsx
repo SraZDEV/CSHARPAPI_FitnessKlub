@@ -7,7 +7,9 @@ import Pocetna from "./pages/Pocetna";
 import PrivatniTreneriPregled from "./pages/privatniTreneri/PrivatniTreneriPregled";
 import PrivatniTreneriDodaj from "./pages/privatniTreneri/PrivatniTreneriDodaj";
 import PrivatniTreneriPromjena from "./pages/privatniTreneri/PrivatniTreneriPromjena";
-
+import GrupePregled from './pages/grupe/GrupePregled'
+import GrupeDodaj from './pages/grupe/GrupeDodaj'
+import GrupePromjena from './pages/grupe/GrupePromjena'
 
 function App() {
 
@@ -20,6 +22,10 @@ function App() {
             <Route path={RoutesNames.PRIVATNI_TRENERI_PREGLED} element={<PrivatniTreneriPregled />} />
             <Route path={RoutesNames.PRIVATNI_TRENERI_NOVI} element={<PrivatniTreneriDodaj />} />
             <Route path={RoutesNames.PRIVATNI_TRENERI_PROMJENA} element={<PrivatniTreneriPromjena />} />
+
+            <Route path={RoutesNames.GRUPA_PREGLED} element={<GrupePregled />} />
+            <Route path={RoutesNames.GRUPA_NOVI} element={<GrupeDodaj />} />
+            <Route path={RoutesNames.GRUPA_PROMJENA} element={<GrupePromjena />} />
         </Routes>
       </>
     )

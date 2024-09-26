@@ -3,7 +3,11 @@ export const RoutesNames = {
     HOME: '/',
     PRIVATNI_TRENERI_PREGLED: '/privatniTreneri',
     PRIVATNI_TRENERI_NOVI: '/privatniTreneri/dodaj',
-    PRIVATNI_TRENERI_PROMJENA: '/privatniTreneri/:id'
+    PRIVATNI_TRENERI_PROMJENA: '/privatniTreneri/:id',
+
+    GRUPA_PREGLED: '/grupe',
+    GRUPA_NOVI: '/grupe/dodaj',
+    GRUPA_PROMJENA: '/grupe/:sifra',
 };
 
 export const BACKEND_URL = 'https://thekalazic-001-site1.etempurl.com/api/v1'

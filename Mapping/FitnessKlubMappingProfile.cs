@@ -12,7 +12,17 @@ namespace CSHARPAPI_FitnessKlub.Mapping
             CreateMap<PrivatniTrener, PrivatniTrenerDTORead>();
             CreateMap<PrivatniTrenerDTOInsertUpdate, PrivatniTrener>();
 
-
+            CreateMap<Grupa, GrupaDTORead>()
+                .ForMember(
+                    dest => dest.PrivatniTrenerNaziv,
+                    opt => opt.MapFrom(src => src.PrivatniTrener.Ime)
+                );
+            CreateMap<Grupa, GrupaDTOInsertUpdate>().ForMember(
+                    dest => dest.PrivatniTrenerNaziv,
+                    opt => opt.MapFrom(src => src.PrivatniTrener.Id)
+                );
+            CreateMap<GrupaDTOInsertUpdate, Grupa>();
+            
         }
 
 

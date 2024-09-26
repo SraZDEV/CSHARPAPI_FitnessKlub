@@ -14,6 +14,11 @@ namespace CSHARPAPI_FitnessKlub.Data
         public DbSet<PrivatniTrener> Privatni_Treneri { get; set; }
         public DbSet<Clan> Clanovi { get; set; }
         public DbSet<Grupa> Grupe { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Grupa>().HasOne(g => g.PrivatniTrener);
+        }
         public DbSet<PrivatniTrening> Privatni_Trening { get; set; }
 
     }
