@@ -45,7 +45,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             Grupa? e;
             try
             {
-                e = _context.Grupe.Include(g => g.PrivatniTrener).FirstOrDefault(x => x.Id == id);
+                e = _context.Grupe.Include(g => g.PrivatniTrener).FirstOrDefault(g => g.Id == id);
             }
             catch (Exception ex)
             {
