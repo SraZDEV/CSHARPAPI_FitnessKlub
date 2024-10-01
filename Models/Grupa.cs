@@ -6,7 +6,6 @@ public class Grupa: Entitet
 {
 
     public string? Naziv { get; set; }
-    [Column("privatni_trener")]
     [ForeignKey("privatni_trener")]
     public required PrivatniTrener PrivatniTrener { get; set; }
     [Column ("kolicina_clanova")]
