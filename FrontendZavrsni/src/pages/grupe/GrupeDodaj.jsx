@@ -15,13 +15,13 @@ export default function GrupeDodaj() {
   async function dohvatiPrivatniTreneri(){
     const odgovor = await SmjerService.get();
     setPrivatniTreneri(odgovor);
-    setPrivatniTrener(odgovor[0].sifra);
+    setPrivatniTrener(odgovor[0].id);
   }
 
 
 
   useEffect(()=>{
-    dohvatiSmjerove();
+    dohvatiPrivatniTreneri();
   },[]);
 
   async function dodaj(e) {

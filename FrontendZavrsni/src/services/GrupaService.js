@@ -10,8 +10,8 @@ async function get(){
     .catch((e)=>{console.error(e)})
 }
 
-async function getBySifra(sifra){
-    return await HttpService.get('/Grupa/' + sifra)
+async function getByid(id){
+    return await HttpService.get('/Grupa/' + id)
     .then((odgovor)=>{
         return {greska: false, poruka: odgovor.data}
     })
@@ -20,8 +20,8 @@ async function getBySifra(sifra){
     })
 }
 
-async function obrisi(sifra) {
-    return await HttpService.delete('/Grupa/' + sifra)
+async function obrisi(id) {
+    return await HttpService.delete('/Grupa/' + id)
     .then((odgovor)=>{
         //console.log(odgovor);
         return {greska: false, poruka: odgovor.data}
@@ -50,8 +50,8 @@ async function dodaj(Grupa) {
     })
 }
 
-async function promjena(sifra,Grupa) {
-    return await HttpService.put('/Grupa/' + sifra,Grupa)
+async function promjena(id,Grupa) {
+    return await HttpService.put('/Grupa/' + id,Grupa)
     .then((odgovor)=>{
         return {greska: false, poruka: odgovor.data}
     })
@@ -72,7 +72,7 @@ async function promjena(sifra,Grupa) {
 
 export default{
     get,
-    getBySifra,
+    getByid,
     obrisi,
     dodaj,
     promjena

@@ -7,7 +7,7 @@ export const RoutesNames = {
 
     GRUPA_PREGLED: '/grupe',
     GRUPA_NOVI: '/grupe/dodaj',
-    GRUPA_PROMJENA: '/grupe/:sifra',
+    GRUPA_PROMJENA: '/grupe/:id',
 
     CLAN_PREGLED '/clanovi',
     CLAN_NOVI '/clanovi/dodaj',
