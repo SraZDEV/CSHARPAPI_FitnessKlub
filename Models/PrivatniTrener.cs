@@ -4,12 +4,12 @@ namespace CSHARPAPI_FitnessKlub.Models
 {
     public class PrivatniTrener: Entitet
     {
-        public string? Ime { get; set; }
-        public string? Prezime { get; set; }
-        public string? Email { get; set; }
+        public required string Ime { get; set; }
+        public required string Prezime { get; set; }
+        public required string Email { get; set; }
 
         [Column("cijena_sat")]
-        public decimal? CijenaSat { get; set; }
+        public decimal CijenaSat { get; set; }
 
 
         public ICollection<Clan>? Clanovi { get; } = [];
