@@ -2,10 +2,10 @@
 {
     public record GrupaDTORead(
         int Id,
-        string? Naziv,
-        string? PrivatniTrenerNaziv,
-        int? KolicinaClanova,
-        decimal? Cijena
+        string Naziv,
+        string PrivatniTrenerNaziv,
+        int KolicinaClanova,
+        decimal Cijena
         );
     
     

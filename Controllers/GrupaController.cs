@@ -4,6 +4,7 @@ using CSHARPAPI_FitnessKlub.Models;
 using CSHARPAPI_FitnessKlub.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace CSHARPAPI_FitnessKlub.Controllers
 {
@@ -24,7 +25,16 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             }
             try
             {
-                return Ok(_mapper.Map<List<GrupaDTORead>>(_context.Grupe.Include(g => g.PrivatniTrener)));
+                var grupe = _context.Grupe.Include(g => g.PrivatniTrener);
+
+                List < GrupaDTORead > lista = new();
+
+                foreach(var g in grupe)
+                {
+                    lista.Add(new(g.Id, g.Naziv, g.PrivatniTrener.Ime + " " + g.PrivatniTrener.Prezime, g.KolicinaClanova, g.Cijena));
+                }
+
+                return Ok(lista);
             }
             catch (Exception ex)
             {
@@ -36,7 +46,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public ActionResult<GrupaDTOInsertUpdate> GetById(int id)
+        public ActionResult<GrupaDTORead> GetById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -56,7 +66,9 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 return NotFound(new { poruka = "Grupa ne postoji u bazi" });
             }
 
-            return Ok(_mapper.Map<GrupaDTOInsertUpdate>(e));
+            
+
+            return Ok(new GrupaDTORead(e.Id, e.Naziv, e.PrivatniTrener.Ime + " " + e.PrivatniTrener.Prezime, e.KolicinaClanova, e.Cijena));
         }
 
         [HttpPost]
@@ -70,7 +82,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             PrivatniTrener? es;
             try
             {
-                es = _context.Privatni_Treneri.Find(dto.PrivatniTrenerNaziv);
+                es = _context.Privatni_Treneri.Find(dto.PrivatniTrenerId);
             }
             catch (Exception ex)
             {
@@ -83,11 +95,12 @@ namespace CSHARPAPI_FitnessKlub.Controllers
 
             try
             {
-                var e = _mapper.Map<Grupa>(dto);
-                e.PrivatniTrener = es;
+                // var e = _mapper.Map<Grupa>(dto);
+                Grupa e = new Grupa() { Naziv=dto.Naziv, KolicinaClanova=dto.KolicinaClanova, Cijena=dto.Cijena,PrivatniTrener=es};
+               
                 _context.Grupe.Add(e);
                 _context.SaveChanges();
-                return StatusCode(StatusCodes.Status201Created, _mapper.Map<GrupaDTORead>(e));
+                return StatusCode(StatusCodes.Status201Created, new GrupaDTORead(e.Id, e.Naziv, e.PrivatniTrener.Ime + " " + e.PrivatniTrener.Prezime, e.KolicinaClanova, e.Cijena));
             }
             catch (Exception ex)
             {
@@ -126,7 +139,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 PrivatniTrener? es;
                 try
                 {
-                    es = _context.Privatni_Treneri.Find(dto.PrivatniTrenerNaziv);
+                    es = _context.Privatni_Treneri.Find(dto.PrivatniTrenerId);
                 }
                 catch (Exception ex)
                 {
@@ -137,7 +150,10 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                     return NotFound(new { poruka = "Smjer na grupi ne postoji u bazi" });
                 }
 
-                e = _mapper.Map(dto, e);
+                //e = _mapper.Map(dto, e);
+                e.Naziv = dto.Naziv;
+                e.KolicinaClanova = dto.KolicinaClanova;
+                e.Cijena = dto.Cijena;
                 e.PrivatniTrener = es;
                 _context.Grupe.Update(e);
                 _context.SaveChanges();

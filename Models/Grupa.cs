@@ -10,7 +10,7 @@ public class Grupa: Entitet
     public required PrivatniTrener PrivatniTrener { get; set; }
     [Column ("kolicina_clanova")]
     public int KolicinaClanova { get; set; }
-    public int Cijena { get; set; }
+    public decimal Cijena { get; set; }
 
     
 
