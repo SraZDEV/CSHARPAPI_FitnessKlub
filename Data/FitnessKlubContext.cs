@@ -18,8 +18,6 @@ namespace CSHARPAPI_FitnessKlub.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Grupa>().HasOne(g => g.PrivatniTrener);
-        }
-        public DbSet<PrivatniTrening> Privatni_Trening { get; set; }
-
+        }  
     }
 }

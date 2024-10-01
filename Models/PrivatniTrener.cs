@@ -12,6 +12,6 @@ namespace CSHARPAPI_FitnessKlub.Models
         public decimal? CijenaSat { get; set; }
 
 
-        
+        public ICollection<Clan>? Clanovi { get; } = [];
     }
 }

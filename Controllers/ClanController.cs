@@ -1,5 +1,7 @@
-﻿using CSHARPAPI_FitnessKlub.Data;
+﻿using AutoMapper;
+using CSHARPAPI_FitnessKlub.Data;
 using CSHARPAPI_FitnessKlub.Models;
+using CSHARPAPI_FitnessKlub.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSHARPAPI_FitnessKlub.Controllers
@@ -7,56 +9,118 @@ namespace CSHARPAPI_FitnessKlub.Controllers
 
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ClanController:ControllerBase
+    public class ClanController(FitnessKlubContext context, IMapper mapper) : FitnessKlubController(context, mapper)
     {
 
-        private readonly FitnessKlubContext _context;
-
-
-        public ClanController(FitnessKlubContext context)
-        {
-            _context = context;
-        }
-
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<List<ClanDTORead>> Get()
         {
-            return Ok(_context.Clanovi);
+            if (!ModelState.IsValid)
+            {
+
+                return BadRequest(new { poruka = ModelState });
+
+            }
+            try
+            {
+                return Ok(_mapper.Map<List<ClanDTORead>>(_context.Clanovi));
+            }
+            catch (Exception ex) 
+            { 
+                return BadRequest(new {poruka = ex.Message});
+            }
         }
 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult GetById(int id)
+        public ActionResult<ClanDTORead> Get(int id) 
         {
-            return Ok(_context.Clanovi.Find(id));
+
+            if (!ModelState.IsValid)
+            {
+
+                return BadRequest(new { poruka = ModelState });
+
+            }
+            Clan? e;
+            try
+            {
+                e = _context.Clanovi.Find(id);
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(new { poruka = ex.Message});
+            }
+            if (e == null)
+            {
+                return NotFound(new { poruka = "Clan ne postoji u bazi"});
+            }
+
+            return Ok(_mapper.Map<ClanDTORead>(e));
+
         }
 
+
         [HttpPost]
-        public IActionResult Post(Clan clan)
+        public IActionResult Post(ClanDTOInsertUpdate dto)
         {
-            _context.Clanovi.Add(clan);
-            _context.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created, clan);
+            if (!ModelState.IsValid)
+            {
+
+                return BadRequest(new { poruka = ModelState });
+
+            }
+            try
+            {
+                var e = _mapper.Map<Clan>(dto);
+                _context.Clanovi.Add(e);
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created, _mapper.Map<ClanDTORead>(e));
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(new { poruka = ex.Message});
+            }
         }
 
         [HttpPut]
         [Route("{id:int}")]
         [Produces("application/json")]
-        public IActionResult Put(int id, Clan clan)
+        public IActionResult Put(int id, ClanDTOInsertUpdate dto)
         {
-            var clanIzBaze = _context.Clanovi.Find(id);
+            if (!ModelState.IsValid)
+            {
 
-            clanIzBaze.Ime = clan.Ime;
-            clanIzBaze.Prezime = clan.Prezime;
-            clanIzBaze.Email = clan.Email;
-            clanIzBaze.Grupa = clan.Grupa;
-            clanIzBaze.ClanOd = clan.ClanOd;
-            clanIzBaze.Verificiran = clan.Verificiran;
+                return BadRequest(new { poruka = ModelState });
 
-            _context.Clanovi.Update(clanIzBaze);
-            _context.SaveChanges();
+            }
+            try
+            {
+                Clan? e;
+                try
+                {
+                    e = _context.Clanovi.Find(id);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { poruka = ex.Message });
+                }
+                if (e == null)
+                {
+                    return NotFound(new { poruka = "Clan ne postoji u bazi" });
+                }
 
-            return Ok(new { poruka = "Uspješno promjenjeno" });
+                e = _mapper.Map(dto, e);
+
+                _context.Clanovi.Update(e);
+                _context.SaveChanges();
+
+                return Ok(new { poruka = "Uspješno promjenjeno," });
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
 
         }
 
@@ -65,11 +129,35 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         [Produces("application/json")]
         public IActionResult Delete(int id)
         {
-            var clanIzBaze = _context.Clanovi.Find(id);
-            _context.Clanovi.Remove(clanIzBaze);
-            _context.SaveChanges();
-            return Ok(new { poruka = "Uspješno obrisano" });
-        }
+            if (!ModelState.IsValid)
+            {
 
+                return BadRequest(new { poruka = ModelState });
+
+            }
+            try
+            {
+                Clan? e;
+                try
+                {
+                    e = _context.Clanovi.Find(id);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { poruka = ex.Message });
+                }
+                if (e == null)
+                {
+                    return NotFound("Clan ne postoji u bazi");
+                }
+                _context.Clanovi.Remove(e);
+                _context.SaveChanges();
+                return Ok(new { poruka = "Uspješno obrisano" });
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
+        }
     }
 }

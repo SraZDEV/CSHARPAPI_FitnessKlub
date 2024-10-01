@@ -13,5 +13,6 @@ public class Clan: Entitet
     public DateTime? ClanOd { get; set; }
     public bool? Verificiran { get; set; }
 
-    
+
+    public ICollection<PrivatniTrener>? PrivatniTreneri { get; } = [];
 }

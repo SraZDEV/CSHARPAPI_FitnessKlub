@@ -8,6 +8,10 @@ export const RoutesNames = {
     GRUPA_PREGLED: '/grupe',
     GRUPA_NOVI: '/grupe/dodaj',
     GRUPA_PROMJENA: '/grupe/:sifra',
+
+    CLAN_PREGLED '/clanovi',
+    CLAN_NOVI '/clanovi/dodaj',
+    CLAN_PROMJENA '/clanovi/:id'
 };
 
 export const BACKEND_URL = 'https://thekalazic-001-site1.etempurl.com/api/v1'

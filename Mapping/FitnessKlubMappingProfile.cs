@@ -12,6 +12,8 @@ namespace CSHARPAPI_FitnessKlub.Mapping
             CreateMap<PrivatniTrener, PrivatniTrenerDTORead>();
             CreateMap<PrivatniTrenerDTOInsertUpdate, PrivatniTrener>();
 
+
+
             CreateMap<Grupa, GrupaDTORead>()
                 .ForMember(
                     dest => dest.PrivatniTrenerNaziv,
@@ -22,7 +24,19 @@ namespace CSHARPAPI_FitnessKlub.Mapping
                     opt => opt.MapFrom(src => src.PrivatniTrener.Id)
                 );
             CreateMap<GrupaDTOInsertUpdate, Grupa>();
-            
+
+
+
+            CreateMap<Clan, ClanDTORead>()
+                .ForMember(
+                    dest => dest.GrupaNaziv,
+                    opt => opt.MapFrom(src => src.Grupa.Naziv)
+                );
+            CreateMap<Clan, ClanDTOInsertUpdate>().ForMember(
+                    dest => dest.GrupaNaziv,
+                    opt => opt.MapFrom(src => src.Grupa.Id)
+                );
+            CreateMap<ClanDTOInsertUpdate, Clan>();
         }
 
 
