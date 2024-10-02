@@ -62,7 +62,7 @@ export default function ClanPregled(){
     return(
         <>
             <Link to={RoutesNames.CLAN_NOVI}>Dodaj novog člana</Link>
-            <Table struped bordered hover responsive>
+            <Table striped bordered hover responsive>
                 <thead>
                     <tr>
                         <th>Ime</th>
