@@ -4,11 +4,12 @@ import GrupaService from "../../services/GrupaService";
 import { RoutesNames } from "../../constants";
 import moment from "moment";
 import { Button, Col, Row } from "react-bootstrap";
+import ClanService from "../../services/ClanService";
 
 
 
 export default function ClanDodaj() {
-    const navigate = useNavigate
+    const navigate = useNavigate();
 
     const [grupe, setGrupe] = useState([]);
     const [grupaId, setGrupaId] = useState(0);
@@ -23,8 +24,10 @@ export default function ClanDodaj() {
         dohvatiGrupe();
     },[]);
 
+
+
     async function dodaj(e) {
-        const odgovor = await GrupaService.dodaj(e);
+        const odgovor = await ClanService.dodaj(e);
         if(odgovor.greska){
             alert(odgovor.poruka);
             return;

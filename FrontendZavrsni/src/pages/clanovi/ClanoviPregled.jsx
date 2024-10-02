@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import ClanService from "../../services/ClanService";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { RoutesNames } from "../../constants";
 import { Button, Table } from "react-bootstrap";
@@ -12,9 +12,16 @@ export default function ClanPregled(){
 
     const[clanovi, setClanovi] = useState();
 
-    const navigate = useNavigate();
+    let navigate = useNavigate();
 
     async function dohvatiClanove() {
+        try {
+            const odgovor = await ClanService.get();
+            console.log(odgovor); // Provjera što vraća
+            setClanovi(odgovor);
+        } catch (e) {
+            console.log(e);
+        }
         await ClanService.get()
         .then((odgovor)=>{
             setClanovi(odgovor);
@@ -73,7 +80,7 @@ export default function ClanPregled(){
                             <td>{clan.ime}</td>
                             <td>{clan.prezime}</td>
                             <td>{clan.email}</td>
-                            <td>{clan.grupaId}</td>
+                            <td>{clan.grupaNaziv}</td>
                             <td className={clan.clanOd==null ? 'sredina' : 'desno'}>
                                 {clan.clanOd==null ? 'Nije definirano' : clan.clanOd}
                             </td>

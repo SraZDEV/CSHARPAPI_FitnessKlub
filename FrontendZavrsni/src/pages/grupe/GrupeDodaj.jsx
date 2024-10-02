@@ -18,12 +18,12 @@ export default function GrupeDodaj() {
     setPrivatniTrener(odgovor[0].id);
   }
 
-
-
   useEffect(()=>{
     dohvatiPrivatniTreneri();
   },[]);
 
+
+  
   async function dodaj(e) {
     const odgovor = await Service.dodaj(e);
     if(odgovor.greska){
