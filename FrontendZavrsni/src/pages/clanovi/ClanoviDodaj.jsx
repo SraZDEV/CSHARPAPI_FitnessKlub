@@ -17,7 +17,7 @@ export default function ClanDodaj() {
     async function dohvatiGrupe(){
         const odgovor = await GrupaService.get();
         setGrupe(odgovor);
-        setGrupaId(odgovor[0].sifra);
+        setGrupaId(odgovor[0].id);
     }
 
     useEffect(()=>{
@@ -67,7 +67,7 @@ export default function ClanDodaj() {
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="text" name="email" required />
         </Form.Group>
-        <Form.Group className='mb-3' controlId='grupa'>
+        <Form.Group className='mb-3' controlId='grupaNaziv'>
             <Form.Label>Grupa</Form.Label>
             <Form.Select
             onChange={(e)=>{setGrupaId(e.target.value)}}

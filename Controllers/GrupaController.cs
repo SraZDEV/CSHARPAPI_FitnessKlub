@@ -31,6 +31,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
 
                 foreach(var g in grupe)
                 {
+
                     lista.Add(new(g.Id, g.Naziv, g.PrivatniTrener.Ime + " " + g.PrivatniTrener.Prezime, g.KolicinaClanova, g.Cijena));
                 }
 

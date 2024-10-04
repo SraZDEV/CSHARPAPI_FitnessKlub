@@ -13,7 +13,7 @@ export default function GrupeDodaj() {
   const [privatniTrener, setPrivatniTrener] = useState(0);
 
   async function dohvatiPrivatniTreneri(){
-    const odgovor = await SmjerService.get();
+    const odgovor = await PrivatniTrenerService.get();
     setPrivatniTreneri(odgovor);
     setPrivatniTrener(odgovor[0].id);
   }
@@ -43,7 +43,7 @@ export default function GrupeDodaj() {
       naziv: podaci.get('naziv'),
       privatniTrener: parseInt(privatniTrener),
       kolicinaClanova: parseInt(podaci.get('kolicinaClanova')),
-      cijenaSat: parseFloat(podatci.get('cijenaSat'))
+      cijenaSat: parseFloat(podaci.get('cijena'))
     });
   }
 
@@ -57,14 +57,14 @@ export default function GrupeDodaj() {
               <Form.Control type="text" name="naziv" required />
           </Form.Group>
 
-          <Form.Group className='mb-3' controlId='smjer'>
+          <Form.Group className='mb-3' controlId='privatniTrenerNaziv'>
             <Form.Label>Privatni Trener</Form.Label>
             <Form.Select 
             onChange={(e)=>{setPrivatniTrener(e.target.value)}}
             >
             {privatniTreneri && privatniTreneri.map((s,index)=>(
               <option key={index} value={s.id}>
-                {s.ime}
+                {s.ime + " " + s.prezime}
               </option>
             ))}
             </Form.Select>
@@ -75,9 +75,9 @@ export default function GrupeDodaj() {
               <Form.Control type="number" name="kolicinaClanova" min={5} max={30} />
           </Form.Group>
 
-          <Form.Group controlId="cijenaSat">
+          <Form.Group controlId="cijena">
               <Form.Label>Cijena</Form.Label>
-              <Form.Control type="text" name="cijenaSat" required />
+              <Form.Control type="text" name="cijena" required />
           </Form.Group>
 
 

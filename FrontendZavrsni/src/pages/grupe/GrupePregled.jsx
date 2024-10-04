@@ -4,9 +4,9 @@ import { IoIosAdd } from "react-icons/io";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 import Service from "../../services/GrupaService"; 
 import { RoutesNames } from "../../constants";
+import { NumericFormat } from "react-number-format";
 
 export default function GrupePregled(){
     const [grupe,setGrupe] = useState();
@@ -57,9 +57,24 @@ export default function GrupePregled(){
                     {grupe && grupe.map((entitet,index)=>(
                         <tr key={index}>
                             <td>{entitet.naziv}</td>
-                            <td>{entitet.privatniTrener}</td>
+
+                            <td>{entitet.privatniTrenerNaziv}</td>
+
                             <td>{entitet.kolicinaClanova}</td>
-                            <td>{entitet.cijenaSat}</td>
+
+                            <td className={entitet.cijena==null ? 'sredina' : 'desno'}>
+                                {entitet.cijena==null 
+                                ? 'Nije definirano' :
+                                <NumericFormat
+                                value={entitet.cijena}
+                                displayType={'text'}
+                                thousandSeparator='.'
+                                decimalSeparator=','
+                                prefix={'€'}
+                                decimalScale={2}
+                                fixedDecimalScale
+                                />}
+                            </td>
                             <td className="sredina">
                                     <Button
                                         variant='primary'
