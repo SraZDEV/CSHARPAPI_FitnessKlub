@@ -7,7 +7,7 @@
             string Prezime,
             string Email,
             string GrupaNaziv,
-            DateTime clanOd,
+            DateTime? clanOd,
             bool verificiran
 
 

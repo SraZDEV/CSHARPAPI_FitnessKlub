@@ -3,10 +3,10 @@
     public record PrivatniTrenerDTORead(
         
         int Id,
-        string? Ime,
-        string? Prezime,
-        string? Email,
-        decimal? CijenaSat
+        string Ime,
+        string Prezime,
+        string Email,
+        decimal CijenaSat
         );
     
 
