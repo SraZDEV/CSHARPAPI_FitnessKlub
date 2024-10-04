@@ -53,7 +53,7 @@ export default function ClanDodaj() {
     return(
         <>
         Dodavanje novog člana
-
+        <hr />
         <Form onSubmit={obradiSubmit}>
             <Form.Group controlId="ime">
                 <Form.Label>Ime</Form.Label>

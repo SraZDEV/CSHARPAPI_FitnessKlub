@@ -50,7 +50,7 @@ export default function GrupeDodaj() {
   return (
       <>
       Dodavanje nove grupe
-      
+      <hr />
       <Form onSubmit={obradiSubmit}>
           <Form.Group controlId="naziv">
               <Form.Label>Naziv</Form.Label>
