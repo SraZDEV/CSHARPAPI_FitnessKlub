@@ -7,13 +7,13 @@ namespace CSHARPAPI_FitnessKlub.Models.DTO
         string Ime,
         [Required(ErrorMessage = "Prezime obavezno!")]
         string Prezime,
-        [Required(ErrorMessage = "Emali obavezan!")]
+        [Required(ErrorMessage = "Email obavezan!")]
         [EmailAddress(ErrorMessage ="Email nije dobrog formata")]
         string Email,
         int GrupaNaziv,
-        DateTime? clanOd,
+        DateTime? ClanOd,
         [Required(ErrorMessage = "Obavezna verifikacija!")]
-        bool verificiran
+        bool Verificiran
 
         );
 }

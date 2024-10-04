@@ -7,8 +7,8 @@
             string Prezime,
             string Email,
             string GrupaNaziv,
-            DateTime? clanOd,
-            bool verificiran
+            DateTime? ClanOd,
+            bool Verificiran
 
 
         );
