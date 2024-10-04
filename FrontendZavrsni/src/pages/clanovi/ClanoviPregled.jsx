@@ -66,7 +66,7 @@ export default function ClanPregled(){
                 <thead>
                     <tr>
                         <th>Ime</th>
-                        <th>Prezme</th>
+                        <th>Prezime</th>
                         <th>Email</th>
                         <th>Grupa</th>
                         <th>Član od</th>
@@ -81,11 +81,8 @@ export default function ClanPregled(){
                             <td>{clan.prezime}</td>
                             <td>{clan.email}</td>
                             <td>{clan.grupaNaziv}</td>
-                            <td className={clan.clanOd==null ? 'sredina' : 'desno'}>
-                                {clan.clanOd==null ? 'Nije definirano' : clan.clanOd}
-                            </td>
                             <td className={'sredina'}>
-                                {formatirajDatum(clan.clanOd)}
+                            {formatirajDatum(clan.clanOd)}
                             </td>
                             <td className={'sredina'}>
                                 <GrValidate 
