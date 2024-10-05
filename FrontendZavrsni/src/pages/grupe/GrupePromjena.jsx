@@ -67,7 +67,7 @@ export default function GrupePromjena() {
   return (
       <>
       Mjenjanje podataka grupe
-      
+      <hr />
       <Form onSubmit={obradiSubmit}>
           <Form.Group controlId="naziv">
               <Form.Label>Naziv</Form.Label>

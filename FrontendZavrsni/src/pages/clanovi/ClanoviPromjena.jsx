@@ -72,7 +72,7 @@ export default function ClanoviPromjena() {
     return (
         <>
         Mjenjanje podataka grupe
-
+        <hr />
         <Form onSubmit={obradiSubmit}>
             <Form.Group controlId="ime">
                 <Form.Label>Ime</Form.Label>
