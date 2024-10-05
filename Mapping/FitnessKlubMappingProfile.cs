@@ -36,6 +36,19 @@ namespace CSHARPAPI_FitnessKlub.Mapping
                     dest => dest.GrupaNaziv,
                     opt => opt.MapFrom(src => src.Grupa.Id)
                 );
+
+
+            //CreateMap<Clan, ClanDTORead>()
+            //    .ForCtorParam(
+            //        "GrupaNaziv",
+            //        opt => opt.MapFrom(src => src.Grupa.Naziv)
+            //    );
+            //CreateMap<Clan, ClanDTOInsertUpdate>().ForCtorParam(
+            //        "GrupaNaziv",
+            //        opt => opt.MapFrom(src => src.Grupa.Id)
+            //    );
+
+
             CreateMap<ClanDTOInsertUpdate, Clan>();
         }
 

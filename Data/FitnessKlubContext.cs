@@ -19,5 +19,7 @@ namespace CSHARPAPI_FitnessKlub.Data
         {
             modelBuilder.Entity<Grupa>().HasOne(g => g.PrivatniTrener);
         }  
+
+        
     }
 }

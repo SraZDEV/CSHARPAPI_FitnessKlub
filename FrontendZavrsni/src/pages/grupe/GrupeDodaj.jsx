@@ -41,7 +41,7 @@ export default function GrupeDodaj() {
 
     dodaj({
       naziv: podaci.get('naziv'),
-      privatniTrener: parseInt(privatniTrener),
+      privatniTrenerId: parseInt(privatniTrener),
       kolicinaClanova: parseInt(podaci.get('kolicinaClanova')),
       cijenaSat: parseFloat(podaci.get('cijena'))
     });

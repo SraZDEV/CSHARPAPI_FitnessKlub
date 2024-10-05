@@ -44,7 +44,7 @@ export default function ClanDodaj() {
             ime: podatci.get('ime'),
             prezime: podatci.get('prezime'),
             email: podatci.get('email'),
-            grupa: parseInt(grupaId),
+            grupaNaziv: parseInt(grupaId),
             clanOd: moment.utc(podatci.get('clanOd')),
             verificiran: podatci.get('verificiran')=='on' ? true : false
         });

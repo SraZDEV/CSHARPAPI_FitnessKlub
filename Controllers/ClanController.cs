@@ -3,6 +3,7 @@ using CSHARPAPI_FitnessKlub.Data;
 using CSHARPAPI_FitnessKlub.Models;
 using CSHARPAPI_FitnessKlub.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSHARPAPI_FitnessKlub.Controllers
 {
@@ -23,7 +24,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             }
             try
             {
-                return Ok(_mapper.Map<List<ClanDTORead>>(_context.Clanovi));
+                return Ok(_mapper.Map<List<ClanDTORead>>(_context.Clanovi.Include(g=> g.Grupa)));
             }
             catch (Exception ex) 
             { 
