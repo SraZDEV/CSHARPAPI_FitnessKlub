@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Form, Link, useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import GrupaService from "../../services/GrupaService";
 import { RoutesNames } from "../../constants";
 import moment from "moment";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import ClanService from "../../services/ClanService";
 
 
@@ -44,7 +44,7 @@ export default function ClanDodaj() {
             ime: podatci.get('ime'),
             prezime: podatci.get('prezime'),
             email: podatci.get('email'),
-            grupaNaziv: parseInt(grupaId),
+            grupaSifra: parseInt(grupaId),
             clanOd: moment.utc(podatci.get('clanOd')),
             verificiran: podatci.get('verificiran')=='on' ? true : false
         });

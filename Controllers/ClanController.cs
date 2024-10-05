@@ -71,17 +71,40 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 return BadRequest(new { poruka = ModelState });
 
             }
+            
+            
+            var grupa = _context.Grupe.Find(dto.GrupaSifra);
+
+            // provjera postoji li grupa
+
+            Grupa? es;
+            try
+            {
+                es = _context.Grupe.Find(dto.GrupaSifra);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
+            if (es == null)
+            {
+                return NotFound(new {poruka = "Grupa na koju pokušavate dodati člana ne postoji"});
+            }
+
             try
             {
                 var e = _mapper.Map<Clan>(dto);
+                e.Grupa = grupa;
                 _context.Clanovi.Add(e);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, _mapper.Map<ClanDTORead>(e));
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return BadRequest(new { poruka = ex.Message});
+                return BadRequest(new { poruka = ex.Message });
             }
+            
+            
         }
 
         [HttpPut]

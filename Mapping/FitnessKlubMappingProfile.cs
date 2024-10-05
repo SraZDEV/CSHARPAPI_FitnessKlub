@@ -33,7 +33,7 @@ namespace CSHARPAPI_FitnessKlub.Mapping
                     opt => opt.MapFrom(src => src.Grupa.Naziv)
                 );
             CreateMap<Clan, ClanDTOInsertUpdate>().ForMember(
-                    dest => dest.GrupaNaziv,
+                    dest => dest.GrupaSifra,
                     opt => opt.MapFrom(src => src.Grupa.Id)
                 );
 
