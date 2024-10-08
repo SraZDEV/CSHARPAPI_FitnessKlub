@@ -82,7 +82,7 @@ export default function GrupePromjena() {
             >
             {privatniTreneri && privatniTreneri.map((s,index)=>(
               <option key={index} value={s.id}>
-                {s.ime}
+                {s.ime + " " + s.prezime}
               </option>
             ))}
             </Form.Select>

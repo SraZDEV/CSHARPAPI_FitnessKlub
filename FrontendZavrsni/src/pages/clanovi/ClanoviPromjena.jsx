@@ -94,7 +94,7 @@ export default function ClanoviPromjena() {
             <Form.Group className='mb-3' controlid='grupa'>
                 <Form.Label>Grupa</Form.Label>
                 <Form.Select
-                value={grupaSifra}
+                value={grupaId}
                 onChange={(e)=>{setGrupaId(e.target.value)}}
                 >
                 {grupe && grupe.map((s,index)=>(
