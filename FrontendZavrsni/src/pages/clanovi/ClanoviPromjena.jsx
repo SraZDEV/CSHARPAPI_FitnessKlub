@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { Form, Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ClanService from "../../services/ClanService";
 import { RoutesNames } from "../../constants";
 import moment from "moment";
 import GrupaService from '../../services/GrupaService';
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 
 
 export default function ClanoviPromjena() {
 
     const navigate = useNavigate();
-    const routeParams = useParams
+    const routeParams = useParams();
 
     const [grupe, setGrupe] = useState ([]);
     const [grupaId, setGrupaId] = useState(0);
@@ -24,14 +24,14 @@ export default function ClanoviPromjena() {
     // ubacivanje grupe
     
     async function dohvatiClan() {
-        const odgovor = await ClanService.getById(routeParams.Id);
+        const odgovor = await ClanService.getById(routeParams.id);
         if(odgovor.greska){
             alert(odgovor.poruka);
             return;
         }
         let clan = odgovor.poruka;
         setClan(clan);
-        setGrupaId(grupa.grupaId);
+        setGrupaId(clan.grupaId);
         odgovor.poruka.clanOd = moment.utc(odgovor.poruka.clanOd).format('yyyy-MM-DD');
         setClan(odgovor.poruka);
     }
@@ -74,7 +74,7 @@ export default function ClanoviPromjena() {
         Mjenjanje podataka grupe
         <hr />
         <Form onSubmit={obradiSubmit}>
-            <Form.Group controlId="ime">
+        <Form.Group controlId="ime">
                 <Form.Label>Ime</Form.Label>
                 <Form.Control type="text" name="ime" required defaultValue={clan.ime} />
             </Form.Group>

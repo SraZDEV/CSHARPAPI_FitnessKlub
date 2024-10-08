@@ -25,29 +25,18 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             }
             try
             {
-                var grupe = _context.Grupe.Include(g => g.PrivatniTrener);
-
-                List < GrupaDTORead > lista = new();
-
-                foreach(var g in grupe)
-                {
-
-                    lista.Add(new(g.Id, g.Naziv, g.PrivatniTrener.Ime + " " + g.PrivatniTrener.Prezime, g.KolicinaClanova, g.Cijena));
-                }
-
-                return Ok(lista);
+                return Ok(_mapper.Map<List<GrupaDTORead>>(_context.Grupe.Include(g => g.PrivatniTrener)));
             }
             catch (Exception ex)
             {
                 return BadRequest(new { poruka = ex.Message });
             }
-
         }
 
 
         [HttpGet]
         [Route("{id:int}")]
-        public ActionResult<GrupaDTORead> GetById(int id)
+        public ActionResult<GrupaDTOInsertUpdate> GetById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -67,9 +56,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 return NotFound(new { poruka = "Grupa ne postoji u bazi" });
             }
 
-            
-
-            return Ok(new GrupaDTORead(e.Id, e.Naziv, e.PrivatniTrener.Ime + " " + e.PrivatniTrener.Prezime, e.KolicinaClanova, e.Cijena));
+            return Ok(_mapper.Map<GrupaDTOInsertUpdate>(e));
         }
 
         [HttpPost]
@@ -96,9 +83,8 @@ namespace CSHARPAPI_FitnessKlub.Controllers
 
             try
             {
-                // var e = _mapper.Map<Grupa>(dto);
-                Grupa e = new Grupa() { Naziv=dto.Naziv, KolicinaClanova=dto.KolicinaClanova, Cijena=dto.Cijena,PrivatniTrener=es};
-               
+                var e = _mapper.Map<Grupa>(dto);
+                e.PrivatniTrener = es;
                 _context.Grupe.Add(e);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, new GrupaDTORead(e.Id, e.Naziv, e.PrivatniTrener.Ime + " " + e.PrivatniTrener.Prezime, e.KolicinaClanova, e.Cijena));

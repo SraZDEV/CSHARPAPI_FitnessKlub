@@ -18,7 +18,7 @@ export default function NavBarFitnessKlub(){
               <Nav className="me-auto">
                 <Nav.Link onClick={()=>navigate(RoutesNames.HOME)}>Početna</Nav.Link>
                 <Nav.Link href="https://thekalazic-001-site1.etempurl.com/swagger/index.html" target='_blank'>Swagger</Nav.Link>
-                <NavDropdown title="Programi" id="basic-nav-dropdown">
+                <NavDropdown title="Pretraživač" id="basic-nav-dropdown">
                   <NavDropdown.Item onClick={()=>navigate(RoutesNames.PRIVATNI_TRENERI_PREGLED)}>Privatni Treneri</NavDropdown.Item>
                   <NavDropdown.Item onClick={()=>navigate(RoutesNames.CLAN_PREGLED)}>Članovi</NavDropdown.Item>
                   <NavDropdown.Item onClick={()=>navigate(RoutesNames.GRUPA_PREGLED)}>Grupe</NavDropdown.Item>

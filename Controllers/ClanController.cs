@@ -34,7 +34,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public ActionResult<ClanDTORead> Get(int id) 
+        public ActionResult<ClanDTOInsertUpdate> Get(int id) 
         {
 
             if (!ModelState.IsValid)
@@ -46,7 +46,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             Clan? e;
             try
             {
-                e = _context.Clanovi.Find(id);
+                e = _context.Clanovi.Include(c=>c.Grupa).FirstOrDefault(x=>x.Id==id);
             }
             catch (Exception ex) 
             {
@@ -57,7 +57,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 return NotFound(new { poruka = "Clan ne postoji u bazi"});
             }
 
-            return Ok(_mapper.Map<ClanDTORead>(e));
+            return Ok(_mapper.Map<ClanDTOInsertUpdate>(e));
 
         }
 
@@ -73,14 +73,14 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             }
             
             
-            var grupa = _context.Grupe.Find(dto.GrupaSifra);
+            var grupa = _context.Grupe.Find(dto.GrupaId);
 
             // provjera postoji li grupa
 
             Grupa? es;
             try
             {
-                es = _context.Grupe.Find(dto.GrupaSifra);
+                es = _context.Grupe.Find(dto.GrupaId);
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             try
             {
                 var e = _mapper.Map<Clan>(dto);
-                e.Grupa = grupa;
+                e.Grupa = es;
                 _context.Clanovi.Add(e);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, _mapper.Map<ClanDTORead>(e));
@@ -133,8 +133,21 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 {
                     return NotFound(new { poruka = "Clan ne postoji u bazi" });
                 }
+                Grupa? es;
+                try
+                {
+                    es = _context.Grupe.Include(g => g.PrivatniTrener).FirstOrDefault(x => x.Id == id);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { poruka = ex.Message });
+                }
+                if (es == null)
+                {
+                    return NotFound(new { poruka = "Grupa ne postoji u bazi" });
+                }
 
-                e = _mapper.Map(dto, e);
+                es = _mapper.Map(dto, es);
 
                 _context.Clanovi.Update(e);
                 _context.SaveChanges();
@@ -183,5 +196,13 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 return BadRequest(new { poruka = ex.Message });
             }
         }
+
+
+
+
+
+
+
+
     }
 }

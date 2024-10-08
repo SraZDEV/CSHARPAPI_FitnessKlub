@@ -18,6 +18,8 @@ namespace CSHARPAPI_FitnessKlub.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Grupa>().HasOne(g => g.PrivatniTrener);
+            modelBuilder.Entity<Clan>().HasOne(g => g.Grupa);
+
         }  
 
         
