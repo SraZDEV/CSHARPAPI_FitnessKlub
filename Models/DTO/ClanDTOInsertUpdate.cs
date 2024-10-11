@@ -10,7 +10,7 @@ namespace CSHARPAPI_FitnessKlub.Models.DTO
         [Required(ErrorMessage = "Email obavezan!")]
         [EmailAddress(ErrorMessage ="Email nije dobrog formata")]
         string Email,
-        int GrupaId,
+        int GrupaSifra,
         DateTime? ClanOd,
         [Required(ErrorMessage = "Obavezna verifikacija!")]
         bool Verificiran

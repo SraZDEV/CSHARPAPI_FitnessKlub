@@ -73,14 +73,14 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             }
             
             
-            var grupa = _context.Grupe.Find(dto.GrupaId);
+            var grupa = _context.Grupe.Find(dto.GrupaSifra);
 
             // provjera postoji li grupa
 
             Grupa? es;
             try
             {
-                es = _context.Grupe.Find(dto.GrupaId);
+                es = _context.Grupe.Find(dto.GrupaSifra);
             }
             catch (Exception ex)
             {
@@ -136,7 +136,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 Grupa? es;
                 try
                 {
-                    es = _context.Grupe.Include(g => g.PrivatniTrener).FirstOrDefault(x => x.Id == id);
+                    es = _context.Grupe.FirstOrDefault(x => x.Id == dto.GrupaSifra);
                 }
                 catch (Exception ex)
                 {
@@ -147,8 +147,8 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                     return NotFound(new { poruka = "Grupa ne postoji u bazi" });
                 }
 
-                es = _mapper.Map(dto, es);
-
+                e = _mapper.Map(dto, e);
+                e.Grupa = es;
                 _context.Clanovi.Update(e);
                 _context.SaveChanges();
 

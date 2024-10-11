@@ -50,7 +50,7 @@ async function dodaj(Grupa) {
     })
 }
 
-async function promjena(id,Grupa) {
+async function promjena(id, Grupa) {
     return await HttpService.put('/Grupa/' + id, Grupa)
     .then((odgovor)=>{
         return {greska: false, poruka: odgovor.data}

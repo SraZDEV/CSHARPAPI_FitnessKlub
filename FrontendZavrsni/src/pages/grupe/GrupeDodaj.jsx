@@ -41,9 +41,9 @@ export default function GrupeDodaj() {
 
     dodaj({
       naziv: podaci.get('naziv'),
-      privatniTrenerId: parseInt(privatniTrener),
+      PrivatniTrenerSifra: parseInt(privatniTrener),
       kolicinaClanova: parseInt(podaci.get('kolicinaClanova')),
-      cijenaSat: parseFloat(podaci.get('cijena'))
+      cijena: parseFloat(podaci.get('cijena'))
     });
   }
 
@@ -77,7 +77,7 @@ export default function GrupeDodaj() {
 
           <Form.Group controlId="cijena">
               <Form.Label>Cijena</Form.Label>
-              <Form.Control type="text" name="cijena" required />
+              <Form.Control type="number" name="cijena" required step={0.01} />
           </Form.Group>
 
 

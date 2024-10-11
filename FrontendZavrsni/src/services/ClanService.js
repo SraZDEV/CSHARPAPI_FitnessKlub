@@ -49,7 +49,7 @@ async function dodaj(Clan) {
 }
 
 async function promjena(id, Clan) {
-    return await HttpService.put('/Clan' + id, Clan)
+    return await HttpService.put('/Clan/' + id, Clan)
     .then((odgovor)=>{
         return {greska: false, poruka: odgovor.data}
     })

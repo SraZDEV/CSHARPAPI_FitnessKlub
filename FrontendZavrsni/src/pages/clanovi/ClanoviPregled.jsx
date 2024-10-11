@@ -81,16 +81,16 @@ export default function ClanPregled(){
                             <td>{clan.prezime}</td>
                             <td>{clan.email}</td>
                             <td>{clan.grupaNaziv}</td>
-                            <td className={'sredina'}>
+                            <td className="sredina">
                             {formatirajDatum(clan.clanOd)}
                             </td>
-                            <td className={'sredina'}>
+                            <td className="sredina">
                                 <GrValidate 
                                 size={30}
                                 color={verificiran(clan.verificiran)}
                                 />
                             </td>
-                            <td>
+                            <td className="sredina">
                                 <Button
                                     variant="primary"
                                     onClick={()=>navigate(`/clanovi/${clan.id}`)}>

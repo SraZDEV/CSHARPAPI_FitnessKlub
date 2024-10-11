@@ -63,7 +63,7 @@ export default function ClanoviPromjena() {
             ime: podatci.get ('ime'),
             prezime: podatci.get ('prezime'),
             email: podatci.get ('email'),
-            grupaId: parseInt(grupaId),
+            grupaSifra: parseInt(grupaId),
             clanOd: moment.utc(podatci.get('clanOd')),
             verificiran: podatci.get ('verificiran')=='on' ? true : false
         });
@@ -71,7 +71,7 @@ export default function ClanoviPromjena() {
 
     return (
         <>
-        Mjenjanje podataka grupe
+        Mjenjanje podataka člana
         <hr />
         <Form onSubmit={obradiSubmit}>
         <Form.Group controlId="ime">

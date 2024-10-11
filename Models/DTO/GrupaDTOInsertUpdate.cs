@@ -7,7 +7,7 @@ namespace CSHARPAPI_FitnessKlub.Models.DTO
         string Naziv,
         [Range(1, int.MaxValue, ErrorMessage = "{0} mora biti između {1} i {2}")]
         [Required(ErrorMessage = "Privatni trener obavezno!")]
-        int PrivatniTrenerId,
+        int PrivatniTrenerSifra,
         int KolicinaClanova,
         decimal Cijena
         );

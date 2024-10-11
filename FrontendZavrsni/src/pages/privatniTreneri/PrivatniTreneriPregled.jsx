@@ -76,7 +76,7 @@ export default function PrivatniTreneriPregled(){
                                 fixedDecimalScale
                                 />}
                             </td>
-                            <td>
+                            <td className="sredina">
                             <Button
                                 variant="primary"
                                 onClick={()=>navigate(`/privatniTreneri/${privatniTrener.id}`)}>

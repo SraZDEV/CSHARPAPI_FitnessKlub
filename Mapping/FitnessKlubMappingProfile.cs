@@ -17,10 +17,10 @@ namespace CSHARPAPI_FitnessKlub.Mapping
             CreateMap<Grupa, GrupaDTORead>()
                 .ForCtorParam(
                     "PrivatniTrenerNaziv",
-                    opt => opt.MapFrom(src => src.PrivatniTrener.Ime)
+                    opt => opt.MapFrom(src => src.PrivatniTrener.Ime + " " + src.PrivatniTrener.Prezime)
                 );
             CreateMap<Grupa, GrupaDTOInsertUpdate>().ForCtorParam(
-                    "PrivatniTrenerId",
+                    "PrivatniTrenerSifra",
                     opt => opt.MapFrom(src => src.PrivatniTrener.Id)
                 );
             CreateMap<GrupaDTOInsertUpdate, Grupa>();
@@ -33,7 +33,7 @@ namespace CSHARPAPI_FitnessKlub.Mapping
                     opt => opt.MapFrom(src => src.Grupa.Naziv)
                 );
             CreateMap<Clan, ClanDTOInsertUpdate>().ForCtorParam(
-                    "GrupaId",
+                    "GrupaSifra",
                     opt => opt.MapFrom(src => src.Grupa.Id)
                 );
             CreateMap<ClanDTOInsertUpdate, Clan>();

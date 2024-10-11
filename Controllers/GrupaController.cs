@@ -70,7 +70,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             PrivatniTrener? es;
             try
             {
-                es = _context.Privatni_Treneri.Find(dto.PrivatniTrenerId);
+                es = _context.Privatni_Treneri.Find(dto.PrivatniTrenerSifra);
             }
             catch (Exception ex)
             {
@@ -126,7 +126,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 PrivatniTrener? es;
                 try
                 {
-                    es = _context.Privatni_Treneri.Find(dto.PrivatniTrenerId);
+                    es = _context.Privatni_Treneri.Find(dto.PrivatniTrenerSifra);
                 }
                 catch (Exception ex)
                 {
@@ -137,10 +137,7 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                     return NotFound(new { poruka = "Smjer na grupi ne postoji u bazi" });
                 }
 
-                //e = _mapper.Map(dto, e);
-                e.Naziv = dto.Naziv;
-                e.KolicinaClanova = dto.KolicinaClanova;
-                e.Cijena = dto.Cijena;
+                e = _mapper.Map(dto, e);
                 e.PrivatniTrener = es;
                 _context.Grupe.Update(e);
                 _context.SaveChanges();

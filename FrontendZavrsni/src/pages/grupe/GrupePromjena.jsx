@@ -21,7 +21,7 @@ export default function GrupePromjena() {
   }
 
   async function dohvatiGrupa() {
-    const odgovor = await Service.getById(routeParams.id);
+    const odgovor = await Service.getByid(routeParams.id);
     if(odgovor.greska){
       alert(odgovor.poruka);
       return;
@@ -58,9 +58,9 @@ export default function GrupePromjena() {
 
     promjena({
         naziv: podaci.get('naziv'),
-        privatniTrener: parseInt(privatniTrener),
+        PrivatniTrenerSifra: parseInt(privatniTrener),
         kolicinaclanova: parseInt(podaci.get('kolicinaClanova')),
-        cijena: podaci.get('cijenaSat')
+        cijena: podaci.get('cijena')
     });
   }
 
