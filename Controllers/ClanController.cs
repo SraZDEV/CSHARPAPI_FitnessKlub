@@ -197,12 +197,31 @@ namespace CSHARPAPI_FitnessKlub.Controllers
             }
         }
 
-
-
-
-
-
-
-
+        [HttpGet]
+        [Route("trazi/{uvjet}")]
+        public ActionResult<List<ClanDTORead>> TraziClan(string uvjet)
+        {
+            if (uvjet == null || uvjet.Length < 3)
+            {
+                return BadRequest(ModelState);
+            }
+            uvjet = uvjet.ToLower();
+            try
+            {
+                IEnumerable<Clan> query = _context.Clanovi;
+                var niz = uvjet.Split(" ");
+                foreach (var s in uvjet.Split(" "))
+                {
+                    query = query.Where(c => c.Ime.ToLower().Contains(s) ||
+                    c.Prezime.ToLower().Contains(s));
+                }
+                var clanovi = query.ToList();
+                return Ok(_mapper.Map<List<ClanDTORead>>(clanovi));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { poruka = e.Message });
+            }
+        }
     }
 }

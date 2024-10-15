@@ -2,7 +2,9 @@
 using CSHARPAPI_FitnessKlub.Data;
 using CSHARPAPI_FitnessKlub.Models;
 using CSHARPAPI_FitnessKlub.Models.DTO;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CSHARPAPI_FitnessKlub.Controllers
@@ -150,5 +152,106 @@ namespace CSHARPAPI_FitnessKlub.Controllers
                 return BadRequest(new { poruka = ex.Message });
             }
         }
+
+
+        // rute: clanovi, dodajClana i obrisiClana
+
+        [HttpGet]
+        [Route("Clanovi/{sifraPrivatniTrener:int}")]
+        public ActionResult<List<ClanDTORead>> GetClanovi(int sifraPrivatniTrener)
+        {
+            if (!ModelState.IsValid || sifraPrivatniTrener <= 0)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var c = _context.Privatni_Treneri
+                    .Include(i => i.Clanovi).FirstOrDefault(x => x.Id == sifraPrivatniTrener);
+                    
+                if (c == null)
+                {
+                    return BadRequest("Ne postoji privatni trener sa šifrom " +
+                        sifraPrivatniTrener + " u bazi!");
+                }
+
+                return Ok(_mapper.Map<List<ClanDTORead>>(c.Clanovi));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { poruka = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("{id:int}/dodaj/{clanId:int}")]
+        public IActionResult DodajClana(int id, int clanId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if(id <= 0 || clanId <= 0)
+            {
+                return BadRequest("Šifra člana ili privatnog trenera nije dobra");
+            }
+            try
+            {
+                var c = _context.Clanovi
+                    .FirstOrDefault(g => g.Id == id);
+                if (c == null)
+                {
+                    return BadRequest("Ne postoji član sa šifrom ");
+                }
+                //otići po privatnog trenera
+                var p = _context.Privatni_Treneri
+                    .Include(i => i.Clanovi).FirstOrDefault(x => x.Id == id);
+                p.Clanovi.Add(c);
+                _context.Privatni_Treneri.Update(p);
+                _context.SaveChanges();
+                return Ok(new { poruka = "Član " + clanId + " dodan privatnom treneru"});
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id:int}/obrisi/{clanId:int}")]
+        public IActionResult ObrisiClana(int id, int clanId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id <= 0 || clanId <= 0) 
+            {
+                return BadRequest("Šifra člana ili privatnog trenera nije dobra");
+            }
+            try
+            {
+                var c = _context.Clanovi
+                    .FirstOrDefault(g => g.Id == id);
+                if (c == null)
+                {
+                    return BadRequest("Ne postoji član sa šifrom ");
+                }
+                //otići po privatnog trenera
+                var p = _context.Privatni_Treneri
+                    .Include(i => i.Clanovi).FirstOrDefault(x => x.Id == id);
+                p.Clanovi.Add(c);
+                _context.Privatni_Treneri.Update(p);
+                _context.SaveChanges();
+                return Ok(new { poruka = "Član " + clanId + " obrisan" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ex.Message });
+            }
+        }
+
+
+
     }
 }
