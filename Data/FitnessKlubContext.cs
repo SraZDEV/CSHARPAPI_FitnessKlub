@@ -19,14 +19,15 @@ namespace CSHARPAPI_FitnessKlub.Data
         {
             modelBuilder.Entity<Grupa>().HasOne(g => g.PrivatniTrener);
             modelBuilder.Entity<Clan>().HasOne(g => g.Grupa);
+            
 
             // veza više na više = n:n
             modelBuilder.Entity<PrivatniTrener>()
                .HasMany(g => g.Clanovi)
                .WithMany(p => p.PrivatniTreneri)
                .UsingEntity<Dictionary<string, object>>("privatni_trening",
-               c => c.HasOne<Clan>().WithMany().HasForeignKey("privatni_trener"),
-               c => c.HasOne<PrivatniTrener>().WithMany().HasForeignKey("clan"),
+               c => c.HasOne<Clan>().WithMany().HasForeignKey("clan"),
+               c => c.HasOne<PrivatniTrener>().WithMany().HasForeignKey("privatni_trener"),
                c => c.ToTable("privatni_trening")
                );
 

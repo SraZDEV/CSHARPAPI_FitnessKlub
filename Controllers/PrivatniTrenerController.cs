@@ -184,28 +184,28 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         }
 
         [HttpPost]
-        [Route("{id:int}/dodaj/{clanId:int}")]
-        public IActionResult DodajClana(int id, int clanId)
+        [Route("{ptId:int}/dodaj/{clanId:int}")]
+        public IActionResult DodajClana(int ptId, int clanId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if(id <= 0 || clanId <= 0)
+            if(ptId <= 0 || clanId <= 0)
             {
                 return BadRequest("Šifra člana ili privatnog trenera nije dobra");
             }
             try
             {
                 var c = _context.Clanovi
-                    .FirstOrDefault(g => g.Id == id);
+                    .FirstOrDefault(g => g.Id == clanId);
                 if (c == null)
                 {
                     return BadRequest("Ne postoji član sa šifrom ");
                 }
                 //otići po privatnog trenera
                 var p = _context.Privatni_Treneri
-                    .Include(i => i.Clanovi).FirstOrDefault(x => x.Id == id);
+                    .Include(i => i.Clanovi).FirstOrDefault(x => x.Id == ptId);
                 p.Clanovi.Add(c);
                 _context.Privatni_Treneri.Update(p);
                 _context.SaveChanges();
@@ -218,36 +218,45 @@ namespace CSHARPAPI_FitnessKlub.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:int}/obrisi/{clanId:int}")]
-        public IActionResult ObrisiClana(int id, int clanId)
+        [Route("{ptId:int}/obrisi/{clanId:int}")]
+        public IActionResult ObrisiPolaznika(int ptId, int clanId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (id <= 0 || clanId <= 0) 
+            if (ptId <= 0 || clanId <= 0)
             {
-                return BadRequest("Šifra člana ili privatnog trenera nije dobra");
+                return BadRequest("Šifra trenera ili člana nije dobra");
             }
             try
             {
-                var c = _context.Clanovi
-                    .FirstOrDefault(g => g.Id == id);
-                if (c == null)
+                var privatniTrener = _context.Privatni_Treneri
+                    .Include(g => g.Clanovi)
+                    .FirstOrDefault(g => g.Id == ptId);
+                if (privatniTrener == null)
                 {
-                    return BadRequest("Ne postoji član sa šifrom ");
+                    return BadRequest("Ne postoji trener sa šifrom " + ptId + " u bazi");
                 }
-                //otići po privatnog trenera
-                var p = _context.Privatni_Treneri
-                    .Include(i => i.Clanovi).FirstOrDefault(x => x.Id == id);
-                p.Clanovi.Add(c);
-                _context.Privatni_Treneri.Update(p);
+                var clan = _context.Clanovi.Find(clanId);
+                if (clan == null)
+                {
+                    return BadRequest("Ne postoji član sa šifrom " + clanId + " u bazi");
+                }
+                clan.PrivatniTreneri.Remove(privatniTrener);
+                _context.Privatni_Treneri.Update(privatniTrener);
                 _context.SaveChanges();
-                return Ok(new { poruka = "Član " + clanId + " obrisan" });
+
+                return Ok(new
+                {
+                    poruka = "Član " + clan.Prezime + " " + clan.Ime + " obrisan iz trenera "
+                 + privatniTrener.Ime + " " + privatniTrener.Prezime
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { ex.Message });
+                return BadRequest(new { poruka = ex.Message });
+
             }
         }
 
