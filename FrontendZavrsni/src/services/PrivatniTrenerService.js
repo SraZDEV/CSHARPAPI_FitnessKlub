@@ -69,10 +69,22 @@ async function promjena(id,privatniTrener) {
     })
 }
 
+async function getClanovi(clanId)
+    {
+        return await HttpService.get('/PrivatniTrener/Clan/' + id)
+        .then((odgovor)=>{
+            return {greska: false, poruka:odgovor.data}
+        })
+        .catch((e)=>{return{greska: true, poruka: 'Problem kod dohvaćanja člana'}})
+    }
+
+
 export default{
     get,
     getById,
     obrisi,
     dodaj,
-    promjena
+    promjena,
+
+    getClanovi
 }

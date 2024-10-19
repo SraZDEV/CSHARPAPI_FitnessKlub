@@ -68,11 +68,12 @@ async function promjena(id, Clan) {
 }
 
 
+
 export default{
     get,
     getById,
     obrisi,
     dodaj,
     promjena,
-
+    
 }

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import PrivatniTrenerService from "../../services/PrivatniTrenerService";
 import { RoutesNames } from "../../constants";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import { FaTrash } from "react-icons/fa";
+import ClanService from "../../services/ClanService";
 
 
 
@@ -11,6 +13,7 @@ export default function PrivatniTreneriPromjena(){
     const navigate = useNavigate();
     const routeParams = useParams();
     const [privatniTrener, setPrivatniTrener] = useState({});
+    const [clanovi, setClanovi] = useState([]);
 
     async function dohvatiPrivatniTreneri(){
         const odgovor = await PrivatniTrenerService.getById(routeParams.id);
@@ -21,8 +24,18 @@ export default function PrivatniTreneriPromjena(){
         setPrivatniTrener(odgovor.poruka);
     }
 
+    async function dohvatiClanove(){
+        const odgovor = await ClanService.getById(routeParams.id)
+        if(odgovor.greska){
+            alert(odgovor.poruka);
+            return;
+        }
+        setClanovi(odgovor.poruka);
+    }
+
     useEffect(()=>{
         dohvatiPrivatniTreneri();
+        dohvatiClanove();
     },[]);
 
     async function promjena(privatniTrener){
@@ -77,7 +90,7 @@ export default function PrivatniTreneriPromjena(){
 
             <hr />
             <Row>
-                <Col xs={6} sm={6} md={3} lg={6} xl={6} xxl={6}>
+                <Col key='1' xs={6} sm={6} md={3} lg={6} xl={6} xxl={6}>
                 <Link to={RoutesNames.PRIVATNI_TRENERI_PREGLED}
                 className="btn btn-danger siroko">
                     Odustani
@@ -91,6 +104,33 @@ export default function PrivatniTreneriPromjena(){
                 </Col>
             </Row>
             </Form>
+            <Col key='2' sm={12} lg={6} md={6}>
+            <div style={{overflow: 'auto', maxHeight:'400px'}}>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Članovi za trenera</th>
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {clanovi && clanovi.map((c, index) =>
+                        <tr key={index}>
+                            <td>
+                                {c.ime} {c.prezime}
+                            </td>
+                            <td>
+                                <Button variant="danger" onClick={() =>
+                                    obrisiClana(routeParams.clanId, c.clanId)
+                                }>
+                                    <FaTrash />
+                                </Button>
+                            </td>
+                        </tr>)}
+                    </tbody>
+                </Table>
+            </div>
+            </Col>
         </Container>
     )
 }
