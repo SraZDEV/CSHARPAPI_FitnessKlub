@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import PrivatniTrenerService from "../../services/PrivatniTrenerService";
 import { RoutesNames } from "../../constants";
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import ClanService from "../../services/ClanService";
 
 
@@ -14,6 +15,9 @@ export default function PrivatniTreneriPromjena(){
     const routeParams = useParams();
     const [privatniTrener, setPrivatniTrener] = useState({});
     const [clanovi, setClanovi] = useState([]);
+    const [pronadeniClanovi, setPronadeniClanovi] = useState([]);
+
+    const typeaheadRef = useRef(null);
 
     async function dohvatiPrivatniTreneri(){
         const odgovor = await PrivatniTrenerService.getById(routeParams.id);
@@ -25,13 +29,44 @@ export default function PrivatniTreneriPromjena(){
     }
 
     async function dohvatiClanove(){
-        const odgovor = await ClanService.getById(routeParams.id)
+        const odgovor = await PrivatniTrenerService.getClanovi(routeParams.id)
         if(odgovor.greska){
             alert(odgovor.poruka);
             return;
         }
         setClanovi(odgovor.poruka);
     }
+
+
+    async function traziClana(uvjet) {
+        const odgovor =  await ClanService.traziClana(uvjet);
+        if(odgovor.greska){
+          alert(odgovor.poruka);
+          return;
+        }
+        setPronadeniClanovi(odgovor.poruka);
+      }
+
+
+      async function dodajClana(e) {
+        const odgovor = await PrivatniTrenerService.dodajClana(routeParams.id, e[0].id);
+        if(odgovor.greska){
+            alert(odgovor.podaci);
+          return;
+        }
+          await dohvatiClanove();
+          typeaheadRef.current.clear();
+      }
+    
+      async function obrisiClana(clan) {
+
+        const odgovor = await PrivatniTrenerService.obrisiClana(routeParams.id, clan);
+        if(odgovor.greska){
+            alert(odgovor.podaci);
+          return;
+        }
+          await dohvatiClanove();
+      }
 
     useEffect(()=>{
         dohvatiPrivatniTreneri();
@@ -65,7 +100,9 @@ export default function PrivatniTreneriPromjena(){
         <Container>
             Promjena privatnih trenera
             <hr />
-            <Form onSubmit={obradiSubmit}>
+            <Row>
+                <Col key={1}>
+                <Form onSubmit={obradiSubmit}>
                 <Form.Group controlId="ime">
                     <Form.Label>Ime</Form.Label>
                     <Form.Control type="text" name="ime" required 
@@ -104,8 +141,34 @@ export default function PrivatniTreneriPromjena(){
                 </Col>
             </Row>
             </Form>
-            <Col key='2' sm={12} lg={6} md={6}>
-            <div style={{overflow: 'auto', maxHeight:'400px'}}>
+                </Col>
+                <Col key={2}>
+
+                <Form.Group className='mb-3' controlId='uvjet'>
+                    <Form.Label>Traži Člana</Form.Label>
+                        <AsyncTypeahead
+                        className='autocomplete'
+                        id='uvjet'
+                        emptyLabel='Nema rezultata'
+                        searchText='Tražim...'
+                        labelKey={(clan) => `${clan.prezime} ${clan.ime}`}
+                        minLength={3}
+                        options={pronadeniClanovi}
+                        onSearch={traziClana}
+                        placeholder='dio imena ili prezimena'
+                        renderMenuItemChildren={(clan) => (
+                        <>
+                            <span>
+                            {clan.prezime} {clan.ime}
+                            </span>
+                        </>
+                        )}
+                        onChange={dodajClana}
+                        ref={typeaheadRef}
+                        />
+                    </Form.Group>
+
+                <div style={{overflow: 'auto', maxHeight:'400px'}}>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -121,7 +184,7 @@ export default function PrivatniTreneriPromjena(){
                             </td>
                             <td>
                                 <Button variant="danger" onClick={() =>
-                                    obrisiClana(routeParams.clanId, c.clanId)
+                                    obrisiClana(c.id)
                                 }>
                                     <FaTrash />
                                 </Button>
@@ -130,7 +193,12 @@ export default function PrivatniTreneriPromjena(){
                     </tbody>
                 </Table>
             </div>
-            </Col>
+                </Col>
+            </Row>
+           
+           
+            
+           
         </Container>
     )
 }

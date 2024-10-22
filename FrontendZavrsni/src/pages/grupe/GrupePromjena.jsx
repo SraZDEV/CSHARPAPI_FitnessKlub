@@ -11,7 +11,7 @@ export default function GrupePromjena() {
   const routeParams = useParams();
 
   const [privatniTreneri, setPrivatniTreneri] = useState([]);
-  const [privatniTrener, setPrivatniTrenerId] = useState(0);
+  const [privatniTrenerId, setPrivatniTrenerId] = useState(0);
 
   const [grupa, setGrupa] = useState({});
 
@@ -28,7 +28,7 @@ export default function GrupePromjena() {
   }
     let grupa = odgovor.poruka;
     setGrupa(grupa);
-    setPrivatniTrenerId(grupa.privatniTreneri); 
+    setPrivatniTrenerId(grupa.privatniTrenerSifra); 
   }
 
   async function dohvatiInicijalnePodatke() {
@@ -58,7 +58,7 @@ export default function GrupePromjena() {
 
     promjena({
         naziv: podaci.get('naziv'),
-        PrivatniTrenerSifra: parseInt(privatniTrener),
+        privatniTrenerSifra: parseInt(privatniTrenerId),
         kolicinaclanova: parseInt(podaci.get('kolicinaClanova')),
         cijena: podaci.get('cijena')
     });
@@ -77,7 +77,7 @@ export default function GrupePromjena() {
           <Form.Group className='mb-3' controlId='privatniTrener'>
             <Form.Label>Privatni Trener</Form.Label>
             <Form.Select
-            value={privatniTrener}
+            value={privatniTrenerId}
             onChange={(e)=>{setPrivatniTrenerId(e.target.value)}}
             >
             {privatniTreneri && privatniTreneri.map((s,index)=>(

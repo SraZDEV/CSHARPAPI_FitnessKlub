@@ -31,7 +31,7 @@ export default function ClanoviPromjena() {
         }
         let clan = odgovor.poruka;
         setClan(clan);
-        setGrupaId(clan.grupaId);
+        setGrupaId(clan.grupaSifra);
         odgovor.poruka.clanOd = moment.utc(odgovor.poruka.clanOd).format('yyyy-MM-DD');
         setClan(odgovor.poruka);
     }

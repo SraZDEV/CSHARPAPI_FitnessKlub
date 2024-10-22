@@ -14,6 +14,6 @@ export const RoutesNames = {
     CLAN_PROMJENA: '/clanovi/:id'
 };
 
-//export const BACKEND_URL = 'https://thekalazic-001-site1.etempurl.com/api/v1'
+export const BACKEND_URL = 'https://thekalazic-001-site1.etempurl.com/api/v1'
 
-export const BACKEND_URL = 'https://localhost:7175/api/v1'
+//export const BACKEND_URL = 'https://localhost:7175/api/v1'

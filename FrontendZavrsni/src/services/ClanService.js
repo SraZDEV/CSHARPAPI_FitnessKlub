@@ -67,6 +67,16 @@ async function promjena(id, Clan) {
         })
 }
 
+// service traziClana
+async function traziClana(uvjet){
+    return await HttpService.get('/Clan/trazi/'+ uvjet)
+    .then((odgovor)=>{
+        //console.table(odgovor.data);
+        return {greska: false, poruka: odgovor.data}
+    })
+    .catch((e)=>{return {greska: true, poruka: 'Problem kod traženja člana'}})
+}
+
 
 
 export default{
@@ -75,5 +85,7 @@ export default{
     obrisi,
     dodaj,
     promjena,
+
+    traziClana
     
 }

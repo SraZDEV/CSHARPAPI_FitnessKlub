@@ -69,15 +69,36 @@ async function promjena(id,privatniTrener) {
     })
 }
 
-async function getClanovi(clanId)
+async function getClanovi(ptId)
     {
-        return await HttpService.get('/PrivatniTrener/Clan/' + id)
+        return await HttpService.get('/PrivatniTrener/Clanovi/' + ptId)
         .then((odgovor)=>{
             return {greska: false, poruka:odgovor.data}
         })
         .catch((e)=>{return{greska: true, poruka: 'Problem kod dohvaćanja člana'}})
     }
 
+    // service dodajClana, obrisiClana
+
+    async function dodajClana(privatniTrener,clan) {
+        return await HttpService.post('/PrivatniTrener/' + privatniTrener + '/dodaj/'+ clan)
+        .then((odgovor)=>{
+            return {greska: false, poruka: odgovor.data}
+        })
+        .catch((e)=>{
+                    return {greska: true, poruka: 'Član se ne može dodati treneru'}
+        })
+    }
+    
+    async function obrisiClana(privatniTrener,clan) {
+        return await HttpService.delete('/PrivatniTrener/' + privatniTrener + '/obrisi/'+ clan)
+        .then((odgovor)=>{
+            return {greska: false, poruka: odgovor.data}
+        })
+        .catch((e)=>{
+                    return {greska: true, poruka: 'Član se ne može obrisati sa trenera'}
+        })
+    }
 
 export default{
     get,
@@ -86,5 +107,7 @@ export default{
     dodaj,
     promjena,
 
-    getClanovi
+    getClanovi,
+    dodajClana,
+    obrisiClana
 }
